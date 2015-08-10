@@ -1,0 +1,26 @@
+#drawing parfait using certain dimensions that are inputted
+#Raya Kuo
+
+from graphics import *
+
+def parfait_stamp(x,y):
+    win = GraphWin("Parfait Drawing", 8*x,4*y)
+
+    #drawing the ladyfinger
+    ladyfinger = Oval(Point(2*x,2*y), Point(6*x,3*y))
+    ladyfinger.setFill ('brown4')
+    ladyfinger.draw(win)
+
+    #drawing the dallops of parfait cream
+    cream_dallop1 = Circle (Point(3*x,2*y), .25*y)
+    cream_dallop1.setFill('white')
+    cream_dallop1.draw(win)
+    cream_dallop2 = Circle (Point (5*x, 2*y), .25*y)
+    cream_dallop2.setFill ('white')
+    cream_dallop2.draw(win)
+    cream_dallop_center = Circle (Point (4*x, 2*y), .5*y)  #center dallop is bigger because it's in the middle, for decorative purposes
+    cream_dallop_center.setFill ('pink')
+    cream_dallop_center.draw(win)
+
+parfait_stamp(150,150)
+

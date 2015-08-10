@@ -1,0 +1,154 @@
+#Checked by Suzy
+#Great job!!
+
+# Name: Raya Kuo
+# Section: class 2
+# 6.189 Project 1: Hangman template
+# hangman_template.py
+
+# Import statements: DO NOT delete these! DO NOT write code above this!
+from random import randrange
+from string import *
+from hangman_lib import *
+
+
+# -----------------------------------
+# Helper code
+# (you don't need to understand this helper code)
+# Import hangman words
+
+WORDLIST_FILENAME = "words.txt"
+
+def load_words():
+    """
+    Returns a list of valid words. Words are strings of lowercase letters.
+    
+    Depending on the size of the word list, this function may
+    take a while to finish.
+    """
+    print "Loading word list from file..."
+    # inFile: file
+    inFile = open(WORDLIST_FILENAME, 'r', 0)
+    # line: string
+    line = inFile.readline()
+    # wordlist: list of strings
+    wordlist = split(line)
+    print "  ", len(wordlist), "words loaded."
+    print 'Enter play_hangman() to play a game of hangman!'
+    return wordlist
+
+# actually load the dictionary of words and point to it with 
+# the words_dict variable so that it can be accessed from anywhere
+# in the program
+words_dict = load_words()
+
+
+
+
+def get_word():
+    """
+    Returns a random word from the word list
+    """
+    word=words_dict[randrange(0,len(words_dict))]
+    return word
+
+# end of helper code
+# -----------------------------------
+secret_word = get_word ()
+
+# GLOBAL VARIABLES 
+answer = secret_word 
+already_guessed = []
+
+# From part 3b:
+def word_guessed():
+    global answer
+    global already_guessed
+    semi_answers = []
+    for i in answer :
+        x = i in already_guessed
+        if x == False :
+            return False
+    return True
+        
+    
+
+
+#to print out what parts of the word they already have
+def print_guessed():
+    
+    global answer
+    global already_guessed
+    semi_answers = []
+    for i in answer :
+        if i in already_guessed:
+            semi_answers.append (i)
+        else:
+            semi_answers.append ('-')
+    list = join(semi_answers, sep='')
+    print "This is what you have so far: ", list
+
+    
+
+
+def play_hangman():
+    # Actually play the hangman game
+       
+    global answer
+    global already_guessed
+    
+    mistakes_made = 0
+    print
+    print_hangman_image (0)
+    while mistakes_made <6 and not (word_guessed()) :
+        print "\n", "You have", 6- mistakes_made, "mistakes left"
+        print "This is what you've already guessed:", already_guessed
+
+        choice = input ("Do you want to 1. guess a letter or 2. guess the word (if wrong, minus 2 guesses!) \nEnter a number. ")
+        #if they choose to guess a letter 
+        if choice == 1 : 
+
+            guess = raw_input ("What letter would you like to guess? ")
+            while guess in already_guessed :
+                print "You've already guessed this!"
+                guess = raw_input ("Guess another letter. ")
+                
+            #add their new guess to the already guessed list
+            already_guessed.append (guess)
+
+
+            if guess in answer :
+                print "Yay! You guessed the letter."
+                print
+                print_hangman_image (mistakes_made)
+                print_guessed ()
+                
+            else :
+                print "Nope, that letter isn't in here!"
+                print
+                print_hangman_image (mistakes_made+1)
+                mistakes_made = mistakes_made +1
+                print_guessed()
+                
+        #if they choose to guess the word
+        if choice == 2 :
+            word = raw_input ("What's the word?")
+            if word == answer :
+                print "Correct!"
+            else :
+                print "Incorrect."
+                print
+                print_hangman_image (mistakes_made+2)
+                mistakes_made = mistakes_made +2
+                print_guessed ()
+                
+ 
+ 
+    return None
+
+play_hangman ()
+if word_guessed():
+    print "\nYou won! The answer is [", answer, "]."
+else:
+    print "\nYou lost. Better luck next time. The answer is [", answer, "]."
+    

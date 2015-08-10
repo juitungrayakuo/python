@@ -1,0 +1,204 @@
+#Raya Kuo
+# sort_algos.py
+
+# Multiple sorting algorithms.
+
+import random
+import time
+
+
+def make_list(n) :
+    """make a list of size n of random integers"""
+    lst = []
+    for i in range(n):
+        lst.append(random.randint(0,n-1))
+    return lst
+
+
+def get_timing(func) :
+    """get the runtime of func"""
+    def wrapper(*arg) :
+        t1 = time.time()
+        res = func(*arg)
+        t2 = time.time()
+        runtime = (t2-t1)*1000.0 
+        print '%s took %0.3f ms' % (func.func_name, runtime)
+        return runtime, res
+    return wrapper
+
+
+def make_gnuplot_files(sizes, runtimes, filename, title) :
+    """uses gnuplot to make a line plot"""
+    # make data file
+    datafile = filename + ".dat"
+    out = file(datafile, 'w')
+    for i, n in enumerate(sizes) :
+        print >>out, sizes[i], runtimes[i]
+    out.close()
+
+    # make gnuplot file
+    gpfile = filename + ".gp"
+    out = file(gpfile, 'w')
+    print >>out, "set xlabel 'size'"
+    print >>out, "set ylabel 'time (ms)'"
+    print >>out, "plot '%s' title '%s' with linespoints" %\
+          (datafile, title)
+    out.close()
+    
+
+@get_timing
+def selection_sort(lst) :
+    """perform (in-place) selection sort"""
+    #let's make it sort from small to large
+    sorted_lst = []
+    while not lst == []:
+        min = lst[0]
+        for num in lst:
+            if num < min:
+                min = num
+        sorted_lst.append(min)
+        lst.remove(min)
+    return sorted_lst
+        
+
+@get_timing 
+def bubble_sort(lst) :
+    """perform (in-place) bubble sort"""
+    #sorts from small to large
+    for i in lst:
+        for i in range(len(lst)-1):
+            value1 = lst[i]
+            value2 = lst[i+1]
+            if value1>value2 :
+                lst[i] = value2
+                lst [i+1] = value1
+    return lst
+
+
+def merge(left, right) :
+    """helper function for merge_sort"""
+    result = []		# sorted list
+    i, j = 0, 0		# indices into left and right lists
+
+    # continually copy smaller value into sorted list
+    while i < len(left) and j < len(right) :
+        if left[i] <= right[j] :
+            result.append(left[i])
+            i += 1
+        else :
+            result.append(right[j])
+            j += 1
+
+    # copy remaining list
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+def merge_sort_helper(lst) :
+    """helper function for merge sort"""
+    n = len(lst)
+
+    # base case
+    if n <= 1 :
+        return lst
+
+    # split into two sublists
+    mid = n / 2
+    left = merge_sort_helper(lst[:mid])		# sort left list
+    right = merge_sort_helper(lst[mid:])	# sort right list
+
+    # merge
+    return merge(left, right)
+
+@get_timing
+def merge_sort(lst) :
+    """perform merge sort (not in-place)"""
+    return merge_sort_helper(lst)
+
+
+# sort lists of various sizes
+sizes = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+runtimes = {'selection': [], 'bubble': [], 'merge': []}
+for n in sizes :
+    # make list and sorted list
+    print 'size:', str(n)
+    lst = make_list(n)
+    sorted_lst = sorted(lst)
+
+    # sort list using selection sort
+    lst1 = lst[:]
+    runtime, sorted_lst1 = selection_sort(lst1)
+##    assert sorted_lst1 == sorted_lst
+    runtimes['selection'].append(runtime)
+
+    # sort list using bubble sort
+    lst2 = lst[:]
+    runtime, sorted_lst2 = bubble_sort(lst2)
+##    assert sorted_lst2 == sorted_lst
+    runtimes['bubble'].append(runtime)
+
+    # sort list using merge sort
+    lst3 = lst[:]
+    runtime, sorted_lst3 = merge_sort(lst3)
+##    assert sorted_lst3 == sorted_lst
+    runtimes['merge'].append(runtime)
+
+    print
+
+# make files for gnuplot
+make_gnuplot_files(sizes, runtimes['selection'], 'selection', 'selection sort')
+make_gnuplot_files(sizes, runtimes['bubble'], 'bubble', 'bubble sort')
+make_gnuplot_files(sizes, runtimes['merge'], 'merge', 'merge sort')
+
+
+
+size: 1000
+selection_sort took 27.128 ms
+bubble_sort took 207.654 ms
+merge_sort took 6.947 ms
+
+size: 2000
+selection_sort took 106.358 ms
+bubble_sort took 854.726 ms
+merge_sort took 14.771 ms
+
+size: 3000
+selection_sort took 238.033 ms
+bubble_sort took 1990.828 ms
+merge_sort took 22.965 ms
+
+size: 4000
+selection_sort took 416.732 ms
+bubble_sort took 3550.453 ms
+merge_sort took 31.190 ms
+
+size: 5000
+selection_sort took 654.358 ms
+bubble_sort took 5450.315 ms
+merge_sort took 39.980 ms
+
+size: 6000
+selection_sort took 963.806 ms
+bubble_sort took 7997.173 ms
+merge_sort took 48.819 ms
+
+size: 7000
+selection_sort took 1323.635 ms
+bubble_sort took 10909.851 ms
+merge_sort took 58.763 ms
+
+size: 8000
+selection_sort took 1743.137 ms
+bubble_sort took 14277.066 ms
+merge_sort took 68.309 ms
+
+size: 9000
+selection_sort took 2222.904 ms
+bubble_sort took 18126.306 ms
+merge_sort took 84.343 ms
+
+size: 10000
+selection_sort took 2743.447 ms
+bubble_sort took 22446.813 ms
+merge_sort took 87.011 ms

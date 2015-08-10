@@ -1,0 +1,94 @@
+#Checked by Grace
+#Great job!! Good use of commenting also :)
+
+# shading.py
+
+# Name: Raya
+# Collaborators: None
+
+# This draws a shaded sphere on the screen.
+
+from graphics import *
+from time import sleep   # for pausing between frames
+
+win = GraphWin("Ball", 300, 300)
+
+
+    
+# sphere location and radius
+x = 150
+y = 150
+r = 100
+
+    
+# control for lighting, resolution, and flatness
+# originally 1,1,2
+dx = 1 #tested, only works from -1.7 to 1.7
+#light spot curves down left for positive, right for negative
+dy = 1 #tested, only works from -1.7 to 1.7
+#light spot goes up for positive, down for negative
+dr = 2 #changes the sharpness of the gradient
+
+
+#figured out circle draws from outer to inner
+while r > 0:
+    # find the arguments for the new circle
+    r = r - dr
+    x = x - dx
+    y = y - dy
+    print r
+    # draw a new circle
+    c = Circle(Point(x, y), r)
+    rgb = 255 - 255*r/100
+    
+    c.setFill(color_rgb(rgb, rgb, 0)) #to make yellow in RGB, simply remove the blue pigments
+    c.setOutline(color_rgb(rgb, rgb, 0))
+
+    time.sleep(.01) #added this so I can see the animation :)
+    
+    c.draw(win)
+    
+p = win.getMouse()
+x_coor = p.getX()
+y_coor = p.getY()
+
+
+#rest the r,x,y values to their original numbers.
+#make them floaters to ensure no problems with division
+r = 100
+x = 150.0
+y = 150.0
+
+
+if (((x_coor - x)**2 + (y_coor - y)**2) <= r**2 ):
+    print "inside circle"
+else :
+    print "outside circle. YOU'VE MADE THE CIRCLE SAD. " #lol!!
+
+#rest the r,x,y values to their original numbers.
+#make them floaters to ensure no problems with division
+
+dx = (2.0/r)*(x - x_coor)
+dy = (2.0/r)*(y - y_coor)
+print dx, dy
+
+while r > 0:
+    # find the arguments for the new circle
+    r = r - dr
+    x = x - dx
+    y = y - dy
+    print r
+    # draw a new circle
+    c = Circle(Point(x, y), r)
+    rgb = 255 - 255*r/100
+    
+    c.setFill(color_rgb(rgb, rgb, 0)) #to make yellow in RGB, simply remove the blue pigments
+    c.setOutline(color_rgb(rgb, rgb, 0))
+
+    time.sleep(.1) #added this so I can see the animation
+    
+    c.draw(win)
+
+    
+    
+win.mainloop()

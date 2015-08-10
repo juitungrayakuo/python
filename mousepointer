@@ -1,0 +1,34 @@
+#Checked by Suzy
+#Great Job!
+
+# mousepoint.py
+
+# Name : Raya
+# Collaborators :
+
+# Retrieves the mouse pointer coordinates
+
+from graphics import *
+
+# create the graphics window
+win = GraphWin("Mouse Pointer", 300, 300)
+
+#draw a rectangle
+rectangle = Rectangle (Point (100,100), Point (200,150))
+rectangle.setFill ('blue')
+rectangle.draw (win)
+
+# get mouse coordinates
+p = win.getMouse()
+x = p.getX()
+y = p.getY()
+print 'x: ', x, 'y: ', y
+if x >= 100 and x <= 200 and y >= 100 and y <= 150 :
+    rectangle.setFill ('green')
+    print "You've clicked on the safe zone!"
+else :
+    rectangle.setFill ('red')
+    print "You've clicked outside the safe zone :("
+
+# process events
+win.mainloop()

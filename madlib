@@ -1,0 +1,41 @@
+#Checked by Suzy
+#Nice story!
+
+# madlib.py
+
+# Name: Raya Kuo
+# Collaborators:
+
+# This program prompts the user for input and prints out a Mad Lib
+
+# Write some code that asks the user for words to fill in the story.
+# Ex. "Give me an adjective: "
+
+# Substitute the user's input into a story and print it out
+
+#ask for all the words first
+def madlibs() :
+    adjective1 = raw_input ("type an adjective ")
+    adjective2 = raw_input ("type an adjective ")
+    noun1 = raw_input ("type a plural noun ")
+    noun2 = raw_input ("type a noun ")
+    verb1 = raw_input ("type a verb ending in -ing ")
+    verb2 = raw_input ("type a past tense verb ")
+
+#write the story using the variables
+
+    print "It was a/an ", adjective1, "day in Yogurtland. " \
+      "All of the", noun1, "were", verb1, "." \
+      "When suddenly a/an", adjective2, "boom sounded in the", noun2, "." \
+      "The", noun2, "screamed and", verb2, "awayed quickly."
+    print "The end."
+    ans = raw_input ("Go again? ") #let the user choose to go again
+    if ans == "yes" :
+        print "Okay, here we go! \n"
+        madlibs ()
+    elif ans == "no" :
+        return None
+
+#run the program for the first time
+madlibs ()
+

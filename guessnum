@@ -1,0 +1,121 @@
+#Checked by Suzy
+#Awesome! Nice job!
+
+# guessnum2.py
+
+# Name : Raya
+# Collaborators :
+
+# This program implements the Guess Your Number! game
+
+# Write some code to ask for the maximum and minimum
+# possible numbers to guess.
+
+# Write some logic that decides on a guess and then prompts
+# the user for whether that guess was (1) too low, (2) too
+# high, or (3) correct.
+
+# Give the program 5 guesses before it asks the user for the answer.\
+
+
+print "Let's play a game! Think of a number."
+x = input ("What's the minimum value, inclusive? ")
+y = input ("What's the maximum value, inclusive? ")
+
+def guess_number (x,y):
+    print "I'm guessing your number is", (int (x+y)/2)
+    response = input ("Is this number 1. too high, 2. too low, or 3. correct? ")
+    if response == 3 :
+        print "\nYay!"
+        return 3
+    if response == 1 :
+        y = (int(x+y)/2) - 1
+        print "\nThe new maximum is", y,  ". The minimum is still", x
+        return y
+    if response == 2 :
+        x = (int (x+y)/2) + 1
+        print "\nThe new minimum is", x, ". The maximum is still", y
+        return x
+
+g = guess_number (x,y) #FIRST GUESS
+if g == 3 :
+    guess = True
+
+elif g < (int (x+y) /2) : #if we had to get a new maximum
+    print "Hm. So my guess was too high."
+    y = g # assign the new maximum value
+    guess = False    
+        
+elif g > (int (x+y) /2) : #if there is a new minimum
+    print "Hm. So my guess was too low." 
+    x = g #assign the new minimum value
+    guess = False
+
+
+if guess == True :
+    print "We're done!"
+else: 
+    g = guess_number (x,y) #SECOND GUESS
+    if g == 3 :
+        guess = True
+        
+    elif g < (int (x+y) /2) : #if we had to get a new maximum
+        print "Hm. So my guess was too high."
+        y = g # assign the new maximum value
+        guess = False
+        
+    elif g > (int (x+y) /2) : #if there is a new minimum
+        print "Hm. So my guess was too low." 
+        x = g #assign the new minimum value
+        guess = False
+        
+    if guess == True :
+        print "We're done!"
+    else: 
+        g = guess_number (x,y) #THIRD GUESS
+        if g == 3 :
+            guess = True
+            
+        elif g < (int (x+y) /2) : #if we had to get a new maximum
+            print "Hm. So my guess was too high."
+            y = g # assign the new maximum value
+            guess = False
+            
+        elif g > (int (x+y) /2) : #if there is a new minimum
+            print "Hm. So my guess was too low." 
+            x = g #assign the new minimum value
+            guess = False
+
+        if guess == True :
+            print "We're done!"
+        else: 
+            g = guess_number (x,y) #FOURTH GUESS
+            if g == 3 :
+                guess = True
+                
+            elif g < (int (x+y) /2) : #if we had to get a new maximum
+                print "Hm. So my guess was too high."
+                y = g # assign the new maximum value
+                guess = False
+                
+            elif g > (int (x+y) /2) : #if there is a new minimum
+                print "Hm. So my guess was too low." 
+                x = g #assign the new minimum value
+                guess = False
+
+            if guess == True :
+                print "We're done!"
+            else: 
+                g = guess_number (x,y)#FIFTH GUESS
+                if g == 3 :
+                    guess = True
+                    print "We're done!"
+                    
+                elif g < (int (x+y) /2) : #if we had to get a new maximum
+                    input ("Please tell me your number! ")
+                    
+                elif g > (int (x+y) /2) : #if there is a new minimum
+                    input ("Please tell me your number! ")
+
+
+

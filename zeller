@@ -1,0 +1,42 @@
+#Checked by Suzy
+#Great work! So close! Way to put in the extra effort!
+
+# zellers.py
+# Name: Raya Kuo
+# Collaborators:
+
+# Use Zeller's algorithm to find out what day of the week you were born, and the days of the week for other dates.
+
+# Zeller's algorithm computes the day of the week on which a given date will fall (or fell). 
+
+# Further directions are in the pset.
+
+#getting all the info I need
+name = raw_input ("What's your first and last name? ")
+A = input ("What month were you born in? Give a number between 1-12 such that March is 1, April is 2, December is 10, January is 11, February is 12 ") #month of birth
+B = input ("What day were you born? Use only numbers between 1-31 " )
+C = input ("The last two digits of your 4 DIGIT BIRTH YEAR. Ex: If you were born in 1997, type 97. ")
+D = input ("The first two digits of your 4 DIGIT BIRTH YEAR. Ex: If you were born in 1997, type 19. ")
+
+#starting the calculations according to the given formula
+if A == 11 or A == 12:  #SM: This should be if Jan or Feb
+    C = C-1
+else :
+    C = C
+W = int((13*A-1) / 5)
+X = int (C / 4)
+Y = int (D / 4)
+Z = int (W+X+Y+B+C-2*D)
+R = Z%7
+#SM: Typo? Make sure your code runs!
+
+#printing the results
+if R < 0 :
+    R = R + 7
+    print "\n", name, "was born on day number:", R
+    print "Conversion: 0 = Sunday, 1 = Monday, ... 6 = Saturday"
+elif R >= 0:
+    print "\n", name, "was born on day number:", R
+    print "Conversion: 0 = Sunday, 1 = Monday, ... 6 = Saturday"
+    
+
